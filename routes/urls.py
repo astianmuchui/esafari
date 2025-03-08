@@ -8,5 +8,6 @@ urlpatterns = [
     # path('optimize/', views.optimization, name="Routes_Optimization"),
     # path('geocode/', views.forward_geocode, name="Routes_Geocode"),
 
+    path('directions/', views.directions, name="directions"),
 ]
 
