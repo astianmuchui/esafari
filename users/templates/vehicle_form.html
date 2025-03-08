@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+<h1 class="text-3xl font-bold text-gray-800 mb-6">Add New Vehicle</h1>
+<form method="post">
+{% csrf_token %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label for="id_make" class="block text-sm font-medium text-gray-700">Make</label>
+{{ form.make }}
+</div>
+<div>
+<label for="id_model" class="block text-sm font-medium text-gray-700">Model</label>
+{{ form.model }}
+</div>
+<div>
+<label for="id_year" class="block text-sm font-medium text-gray-700">Year</label>
+{{ form.year }}
+</div>
+<div>
+<label for="id_license_plate" class="block text-sm font-medium text-gray-700">License Plate</label>
+{{ form.license_plate }}
+</div>
+<div>
+<label for="id_charge_capacity" class="block text-sm font-medium text-gray-700">Charge Capacity (kWh)</label>
+{{ form.charge_capacity }}
+</div>
+<div>
+<label for="id_range" class="block text-sm font-medium text-gray-700">Range (miles/km)</label>
+{{ form.range }}
+</div>
+<div>
+<label for="id_hourly_rate" class="block text-sm font-medium text-gray-700">Hourly Rate</label>
+{{ form.hourly_rate }}
+</div>
+<div>
+<label for="id_is_available" class="block text-sm font-medium text-gray-700">Is Available</label>
+{{ form.is_available }}
+</div>
+<div>
+<label for="id_location" class="block text-sm font-medium text-gray-700">Location</label>
+{{ form.location }}
+</div>
+</div>
+<div class="mt-6">
+<button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Add Vehicle</button>
+</div>
+</form>
+</div>
+{% endblock %}
