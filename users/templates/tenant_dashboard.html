@@ -1,0 +1,210 @@
+<!-- templates/tenant_dashboard.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-gray-900">Tenant Dashboard</h1>
+      <div>
+        <span class="text-gray-600 mr-4">Welcome, {{ request.user.first_name }}</span>
+        <a href="#" class="text-blue-600 hover:text-blue-800">Logout</a>
+      </div>
+      <div>
+        <span class="text-gray-600 mr-4">Back, {{ request.user.first_name }}</span>
+        <a href="{% url 'homepage' %}" class="text-blue-600 hover:text-blue-800">Home</a>
+      </div>
+    </div>
+    
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <!-- Profile Card -->
+      <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Your Profile</h2>
+        <div class="space-y-3">
+          <p class="text-gray-700"><span class="font-medium">Name:</span> {{ request.user.first_name }} {{ request.user.last_name }}</p>
+          <p class="text-gray-700"><span class="font-medium">Email:</span> {{ request.user.email }}</p>
+          <p class="text-gray-700"><span class="font-medium">Phone:</span> {{ request.user.phone_number }}</p>
+          <p class="text-gray-700"><span class="font-medium">Driver License:</span> {{ tenant.driver_license_number }}</p>
+          <p class="text-gray-700"><span class="font-medium">License Expiry:</span> {{ tenant.license_expiry_date }}</p>
+        </div>
+        <div class="mt-4">
+          <a href="#" class="text-blue-600 hover:text-blue-800">Edit Profile</a>
+        </div>
+      </div>
+      
+      <!-- Available EVs -->
+      <div class="bg-white shadow rounded-lg p-6 lg:col-span-2">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Available Electric Vehicles</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Range</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hourly Rate</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <!-- Sample row, this would be populated from the database -->
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">2023 Tesla Model Y</td>
+                <td class="px-6 py-4 whitespace-nowrap">330 miles</td>
+                <td class="px-6 py-4 whitespace-nowrap">$25.00</td>
+                <td class="px-6 py-4 whitespace-nowrap">Downtown</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <a href="#" class="text-blue-600 hover:text-blue-800">Reserve</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Reservations -->
+    <div class="mt-6">
+      <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Your Reservations</h2>
+        {% if reservations %}
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vehicle</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Time</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Time</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Cost</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                {% for reservation in reservations %}
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ reservation.vehicle.make }} {{ reservation.vehicle.model }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ reservation.start_time }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">{{ reservation.end_time }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">${{ reservation.total_cost }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                    {% if reservation.status == 'CONFIRMED' %}
+                      bg-green-100 text-green-800
+                    {% elif reservation.status == 'PENDING' %}
+                      bg-yellow-100 text-yellow-800
+                    {% elif reservation.status == 'COMPLETED' %}
+                      bg-blue-100 text-blue-800
+                    {% else %}
+                      bg-red-100 text-red-800
+                    {% endif %}">
+                      {{ reservation.status }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <a href="#" class="text-blue-600 hover:text-blue-900 mr-3">View</a>
+                    {% if reservation.status == 'CONFIRMED' or reservation.status == 'PENDING' %}
+                      <a href="#" class="text-red-600 hover:text-red-900">Cancel</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="text-gray-500">You don't have any reservations yet.</p>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Payment Methods -->
+    <div class="mt-6">
+      <div class="bg-white shadow rounded-lg p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-900">Payment Methods</h2>
+          <a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+            Add New
+          </a>
+        </div>
+        {% if payment_methods %}
+          <div class="space-y-4">
+            {% for method in payment_methods %}
+              <div class="flex justify-between items-center p-4 border rounded-lg">
+                <div class="flex items-center">
+                  <span class="text-2xl mr-3">
+                    {% if method.type == 'VISA' %}💳{% elif method.type == 'MASTERCARD' %}💳{% elif method.type == 'PAYPAL' %}💱{% else %}💰{% endif %}
+                  </span>
+                  <div>
+                    <p class="font-medium">{{ method.type }}</p>
+                    <p class="text-sm text-gray-500">****{{ method.last_four }}</p>
+                  </div>
+                </div>
+                <div>
+                  {% if method.is_default %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      Default
+                    </span>
+                  {% else %}
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Set as default</a>
+                  {% endif %}
+                  <a href="#" class="text-sm text-red-600 hover:text-red-800 ml-4">Remove</a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-gray-500">You haven't added any payment methods yet.</p>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="mt-6 mb-6">
+      <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+        {% if activities %}
+          <div class="flow-root">
+            <ul role="list" class="-mb-8">
+              {% for activity in activities %}
+                <li>
+                  <div class="relative pb-8">
+                    {% if not forloop.last %}
+                      <span class="absolute top-5 left-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                    {% endif %}
+                    <div class="relative flex items-start space-x-3">
+                      <div class="relative">
+                        <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center ring-8 ring-white">
+                          {% if activity.type == 'RESERVATION' %}
+                            <span class="text-lg">🚗</span>
+                          {% elif activity.type == 'PAYMENT' %}
+                            <span class="text-lg">💵</span>
+                          {% elif activity.type == 'PROFILE' %}
+                            <span class="text-lg">👤</span>
+                          {% else %}
+                            <span class="text-lg">📝</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div>
+                          <div class="text-sm">
+                            <a href="#" class="font-medium text-gray-900">{{ activity.description }}</a>
+                          </div>
+                          <p class="mt-0.5 text-sm text-gray-500">{{ activity.timestamp }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% else %}
+          <p class="text-gray-500">No recent activity to display.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

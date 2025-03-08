@@ -1,0 +1,129 @@
+<!-- templates/register_user.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+      <div class="max-w-md mx-auto">
+        <div class="flex items-center space-x-5">
+          <div class="h-14 w-14 bg-blue-500 rounded-full flex flex-shrink-0 justify-center items-center text-white text-2xl font-mono">EV</div>
+          <div class="block pl-2 font-semibold text-xl self-start text-gray-700">
+            <h2 class="leading-relaxed">
+              {% if selected_role == 'tenant' %}
+                Register as Tenant
+              {% else %}
+                Register as Provider
+              {% endif %}
+            </h2>
+          </div>
+        </div>
+        
+        <div class="divide-y divide-gray-200">
+          <form method="post" action="{% url 'register_user' %}" class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+            {% csrf_token %}
+            <input type="hidden" name="role" value="{{ selected_role }}">
+            
+            <!-- Common user fields -->
+            <div class="flex flex-col">
+              <label class="leading-loose">First Name</label>
+              {{ user_form.first_name }}
+              <span class="text-red-500 text-xs">{{ user_form.first_name.errors }}</span>
+            </div>
+            
+            <div class="flex flex-col">
+              <label class="leading-loose">Last Name</label>
+              {{ user_form.last_name }}
+              <span class="text-red-500 text-xs">{{ user_form.last_name.errors }}</span>
+            </div>
+            
+            <div class="flex flex-col">
+              <label class="leading-loose">Email</label>
+              {{ user_form.email }}
+              <span class="text-red-500 text-xs">{{ user_form.email.errors }}</span>
+            </div>
+            
+            <div class="flex flex-col">
+              <label class="leading-loose">Phone Number</label>
+              {{ user_form.phone_number }}
+              <span class="text-red-500 text-xs">{{ user_form.phone_number.errors }}</span>
+            </div>
+            
+            <div class="flex flex-col">
+              <label class="leading-loose">Address</label>
+              {{ user_form.address }}
+              <span class="text-red-500 text-xs">{{ user_form.address.errors }}</span>
+            </div>
+            
+            <div class="flex flex-col">
+              <label class="leading-loose">Password</label>
+              {{ user_form.password1 }}
+              <span class="text-red-500 text-xs">{{ user_form.password1.errors }}</span>
+            </div>
+            
+            <div class="flex flex-col">
+              <label class="leading-loose">Confirm Password</label>
+              {{ user_form.password2 }}
+              <span class="text-red-500 text-xs">{{ user_form.password2.errors }}</span>
+            </div>
+            
+            <!-- Role-specific fields -->
+            {% if selected_role == 'tenant' %}
+              <div class="flex flex-col">
+                <label class="leading-loose">Driver License Number</label>
+                {{ profile_form.driver_license_number }}
+                <span class="text-red-500 text-xs">{{ profile_form.driver_license_number.errors }}</span>
+              </div>
+              
+              <div class="flex flex-col">
+                <label class="leading-loose">License Expiry Date</label>
+                {{ profile_form.license_expiry_date }}
+                <span class="text-red-500 text-xs">{{ profile_form.license_expiry_date.errors }}</span>
+              </div>
+              
+              <div class="flex flex-col">
+                <label class="leading-loose">Payment Method</label>
+                {{ profile_form.payment_method }}
+                <span class="text-red-500 text-xs">{{ profile_form.payment_method.errors }}</span>
+              </div>
+            {% else %}
+              <div class="flex flex-col">
+                <label class="leading-loose">Company Name</label>
+                {{ profile_form.company_name }}
+                <span class="text-red-500 text-xs">{{ profile_form.company_name.errors }}</span>
+              </div>
+              
+              <div class="flex flex-col">
+                <label class="leading-loose">Business License</label>
+                {{ profile_form.business_license }}
+                <span class="text-red-500 text-xs">{{ profile_form.business_license.errors }}</span>
+              </div>
+              
+              <div class="flex flex-col">
+                <label class="leading-loose">Tax ID</label>
+                {{ profile_form.tax_id }}
+                <span class="text-red-500 text-xs">{{ profile_form.tax_id.errors }}</span>
+              </div>
+            {% endif %}
+            
+            <div class="pt-4 flex items-center space-x-4">
+              <button type="submit" class="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-600">
+                Register
+              </button>
+            </div>
+          </form>
+          
+          <div class="pt-4 flex items-center space-x-4">
+            <a href="{% url 'register' %}" class="flex justify-center items-center w-full text-gray-900 px-4 py-3 rounded-md focus:outline-none">
+              <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+              <span>Back to role selection</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
