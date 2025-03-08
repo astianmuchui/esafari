@@ -17,6 +17,10 @@ geocoder = OpenCageGeocode(settings.OPENCAGE_API_KEY)
 def home(request): 
     return render(request, "routes.html")
 
+def directions(request):
+    return render(request, "directions.html")
+
+
 @csrf_exempt
 def streetmap_api(request):
     if request.method == 'GET':
