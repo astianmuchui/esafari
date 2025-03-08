@@ -1,23 +1,488 @@
 {% extends "base.html" %}
-{% block title %}<title>e-Safari | Sustainable Mobility in Kenya</title>{% endblock title %}
 {% block content %}
-    <header>
-        <div class="w-full h-screen m-0 bg-green-20 bg-gradient-to-tr from-[#565a41] via [#c7ab91] to-[#c577d73]">
-            
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="stylesheet" href="../../assets/css/style.css" class="" />
+    <link rel="stylesheet" href="https://astianmuchui.github.io/jhub-hackathon/assets/css/style.css" class="">
+    <link href="https://fonts.bunny.net/css2?family=Geist" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: "Geist", sans-serif;
+      }
 
-            <nav>
-                <a href="{% url 'loginpage'%}" class="logo">
-                    
-                 
-                </a>
-                <ul class="nav-links">
-                    <li class="text-white"><a href="{% url 'loginpage'%}">Why Choose Us</a></li>
-                    <li><a href="#" class="btn btn-light">Login</a></li>
-                    <li><a href="#" class="btn">Register</a></li>
-                </ul>
-            </nav>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      main {
+        background: linear-gradient(
+          -46deg,
+          #34c759,
+          #964b00,
+          #008000,
+          #32cd32,
+          #3e8e41,
+          #ffffff,
+          #228b22,
+          #786c3b, 
+          #008000,
+          #32cd32,
+          #2ecc71,
+          #ffffff,
+          #8bc34a
+        );
+        background-size: 500% 400%;
+        animation: gradient 60s cubic-bezier(0.86, 0, 0.07, 1) infinite;
+        height: 100vh;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 90% 10%;
+        }
+
+        10% {
+          background-position: 25% 25%;
+        }
+
+        20% {
+          background-position: 10% 25%;
+        }
+
+        30% {
+          background-position: 75% 100%;
+        }
+
+        40% {
+          background-position: 50% 25%;
+        }
+
+        50% {
+          background-position: 75% 25%;
+        }
+
+        60% {
+          background-position: 100% 75%;
+        }
+
+        70% {
+          background-position: 25% 15%;
+        }
+
+        80% {
+          background-position: 0% 95%;
+        }
+
+        90% {
+          background-position: 25% 100%;
+        }
+
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .pulse {
+        cursor: pointer;
+        box-shadow: inset 0 0 0 rgba(44, 103, 204, 0.5);
+        animation: pulse 2s ease-out infinite;
+      }
+
+      .pulse:hover {
+        animation: pulse 2s ease-out infinite;
+      }
+
+      @-webkit-keyframes pulse {
+        0% {
+          -webkit-box-shadow: 0 0 0 0 rgba(105, 175, 255, 0.5);
+        }
+
+        70% {
+          -webkit-box-shadow: 0 0 0 10px rgba(255, 105, 180, 0);
+        }
+
+        100% {
+          -webkit-box-shadow: 0 0 0 0 rgba(11, 89, 157, 0);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          -moz-box-shadow: 0 0 0 0 rgba(4, 72, 231, 0.5);
+          box-shadow: 0 0 0 0 rgba(2, 180, 234, 0.5);
+        }
+
+        70% {
+          -moz-box-shadow: 0 0 0 10px rgba(255, 105, 180, 0);
+          box-shadow: 0 0 0 10px rgba(255, 105, 180, 0);
+        }
+
+        100% {
+          -moz-box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+          box-shadow: 0 0 0 0 rgba(30, 144, 255, 0);
+        }
+      }
+
+      .dance {
+        animation: dance 10s cubic-bezier(0.86, 0, 0.07, 1) infinite;
+      }
+
+      @keyframes dance {
+        0%,
+        100% {
+          transform: scale(0.95);
+        }
+
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      .video-bg {
+        position: relative;
+        overflow: hidden;
+        animation: shadow-swap 30s infinite alternate;
+        animation-delay: 0.5s;
+        animation-timing-function: ease-in-out;
+      }
+
+      @keyframes shadow-swap {
+        0% {
+          box-shadow: 5px -5px 20px rgba(0, 161, 224, 0.8),
+            -5px 5px 20px rgba(255, 20, 147, 0.8);
+        }
+
+        10% {
+          box-shadow: 5px -5px 20px rgba(255, 165, 0, 0.8),
+            -5px 5px 20px rgba(255, 192, 203, 0.8);
+        }
+
+        20% {
+          box-shadow: 5px -5px 20px rgba(30, 144, 255, 0.8),
+            -5px 5px 20px rgba(255, 255, 255, 0.8);
+        }
+
+        30% {
+          box-shadow: 5px -5px 20px rgba(255, 20, 147, 0.8),
+            -5px 5px 20px rgba(0, 161, 224, 0.8);
+        }
+
+        40% {
+          box-shadow: 5px -5px 20px rgba(255, 136, 0, 0.8),
+            -5px 5px 20px rgba(255, 192, 203, 0.8);
+        }
+
+        50% {
+          box-shadow: 5px -5px 20px rgba(30, 144, 255, 0.8),
+            -5px 5px 20px rgba(255, 255, 255, 0.8);
+        }
+
+        60% {
+          box-shadow: 5px -5px 20px rgba(255, 20, 147, 0.8),
+            -5px 5px 20px rgba(0, 161, 224, 0.8);
+        }
+
+        70% {
+          box-shadow: 5px -5px 20px rgba(218, 97, 12, 0.8),
+            -5px 5px 20px rgba(255, 192, 203, 0.8);
+        }
+
+        80% {
+          box-shadow: 5px -5px 20px rgba(30, 144, 255, 0.8),
+            -5px 5px 20px rgba(255, 255, 255, 0.8);
+        }
+
+        90% {
+          box-shadow: 5px -5px 20px rgba(255, 20, 147, 0.8),
+            -5px 5px 20px rgba(0, 161, 224, 0.8);
+        }
+
+        100% {
+          box-shadow: 5px -5px 20px rgba(255, 106, 0, 0.8),
+            -5px 5px 20px rgba(255, 192, 203, 0.8);
+        }
+      }
+
+      video:hover {
+        backdrop-filter: grayscale(10);
+      }
+    </style>
+    <title>E-safari</title>
+  </head>
+
+  <body
+    class="antialiased bg-white m-0 p-0 box-border overflow-x-hidden scroll-smooth"
+  >
+    <main
+      class="h-screen w-full relative z-1"
+      style="
+        clip-path: polygon(50% 0%, 100% 0, 100% 60%, 50% 100%, 0 100%, 0 0);
+      "
+    >
+      <header class="w-full h-14 px-12 py-1 inline-flex z-[999]">
+        <div
+          class="title h-full w-1/5 flex flex-col justify-center content-center items-center"
+        >
+          <h1 class="text-3xl bg-clip-text text-white font-bold">E-safari</h1>
         </div>
-    </header>
+        <nav class="w-3/5">
+          <ul class="flex justify-around h-full items-center">
+            <li><a href="#home" class="text-sm text-white mx-3">Home</a></li>
+            <li>
+              <a href="#about" class="text-sm text-white mx-3">About</a>
+            </li>
+            <li>
+              <a href="#services" class="text-sm text-white mx-3"
+                >Why choose us</a
+              >
+            </li>
+          </ul>
+        </nav>
+       
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
 
-{% endblock%}
+      <div
+        class="hero-section w-full mx-auto h-full relative z-30 flex flex-col items-center content-center justify-center"
+      >
+        <div class="w-10/12 h-full px-2.5 grid grid-cols-2 place-items-center">
+          <div
+            class="h-full w-full py-12 flex flex-col justify-center content-center"
+          >
+            <h1 class="text-[4.5vw] text-white font-extrabold">
+              The Easiest way to diagnose cancer
+            </h1>
+            <p class="text-lg text-white my-8">
+              Using our AI powered techniques and computer vision algorithms,
+              you can easily and quickly detect cancerous cells with high
+              accuracy.
+            </p>
+            <a
+              href="/upload"
+              class="cta h-12 w-max px-8 mt-1 flex flex-col justify-center content-center items-center bg-gradient-to-bl from-white to-white/90 hover:bg-gradient-to-tr rounded-full my-auto"
+            >
+              Get Started
+            </a>
+          </div>
+          <div class="w-full h-full py-12 flex flex-col relative">
+            <img
+              src="../assets/img/mockup.png"
+              alt=""
+              class="relative z-[-1] transition-all transform scale-[1.45] inset-0 rotate-[5deg]"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <section
+      class="h-[130vh] max-h-max flex flex-col items-center w-full content-center pt-12 p-6 bg-gradient-to-br from-white via-white to-white/60"
+    >
+      <h1 class="text-4xl text-black/90 font-extrabold">
+        From The
+        <span
+          class="bg-gradient-to-tr from-pink-500 to-pink-600 text-transparent bg-clip-text"
+          >Numbers</span
+        >
+      </h1>
+
+      <div
+        class="w-11/12 shadow-inner h-3/4 rounded-2xl mt-7 grid grid-cols-2 gap-4 p-3 mb-5"
+      >
+        <canvas id="late-stages-chart" class="w-full h-full p-6"></canvas>
+        <div class="w-full flex flex-col justify-center p-6">
+          <h1
+            class="text-5xl text-black/90 font-extrabold tracking-wide leading-20"
+          >
+            The prevalence of
+            <span
+              class="bg-gradient-to-tr from-rose-500 to-rose-800 text-transparent bg-clip-text"
+              >late stage presentation</span
+            >
+            of cervical cancer <br />
+            <span
+              class="bg-gradient-to-tr from-sky-400 to-sky-600 text-transparent bg-clip-text"
+              >ALONE</span
+            >
+          </h1>
+        </div>
+      </div>
+
+      <a
+        href="/upload"
+        class="shadow-3xl shadow-gray-200 cta h-14 w-max px-8 py-4 my-10 flex flex-col justify-center content-center items-center bg-gradient-to-tr to-primaryPink from-lightBlue hover:bg-gradient-to-r rounded-full my-auto text-white"
+      >
+        Get Started
+      </a>
+    </section>
+
+    <section
+      class="min-h-screen max-h-max pb-14 w-full bg-black/95 flex flex-col items-center w-full content-center pt-12 p-6"
+    >
+      <h1
+        class="text-5xl font-extrabold bg-gradient-to-tr from-white to-sky-600 text-transparent bg-clip-text"
+      >
+        In four easy steps
+      </h1>
+      <video
+        src="../assets/img/mri_video.mp4"
+        muted
+        autoplay
+        loop
+        width="90%"
+        class="w-9/12 h-3/4 mt-14 rounded-2xl object-cover video-bg"
+      ></video>
+
+      <div class="w-9/12 mt-20 grid grid-cols-2 gap-8">
+        <div class="flex flex-col items-start">
+          <i
+            class="text-4xl mb-4font-bold bg-gradient-to-tr from-white to-sky-600 text-transparent bg-clip-text fas fa-upload"
+          ></i>
+          <h2 class="text-2xl my-4 text-white font-bold">
+            <span class="text-sky-400">Upload MRI Scans</span>
+          </h2>
+          <p class="text-white">
+            Doctors upload patient MRI scans to the Afueni platform.
+          </p>
+        </div>
+        <div class="flex flex-col items-start">
+          <i
+            class="text-4xl mb-4font-bold bg-gradient-to-tr from-white to-pink-600 text-transparent bg-clip-text fas fa-brain"
+          ></i>
+          <h2 class="text-2xl my-4 text-white font-bold">
+            <span class="text-sky-400">AI Analysis</span>
+          </h2>
+          <p class="text-white">
+            Our AI analyzes the scans using advanced computer vision algorithms
+            to detect abnormalities.
+          </p>
+        </div>
+        <div class="flex flex-col items-start">
+          <i
+            class="text-4xl mb-4font-bold bg-gradient-to-tr from-white to-sky-600 text-transparent bg-clip-text fas fa-file-medical-alt"
+          ></i>
+          <h2 class="text-2xl my-4 text-white font-bold">
+            <span class="text-sky-400">Generate Report</span>
+          </h2>
+          <p class="text-white">
+            Afueni generates a detailed report highlighting potential cancer
+            cells and their locations.
+          </p>
+        </div>
+        <div class="flex flex-col items-start">
+          <i
+            class="text-4xl mb-4font-bold bg-gradient-to-tr from-white to-pink-600 text-transparent bg-clip-text fas fa-walking"
+          ></i>
+          <h2 class="text-2xl my-4 text-white font-bold">
+            <span class="text-sky-400">Take Action</span>
+          </h2>
+          <p class="text-white">
+            Doctors use the insights to plan treatment or further diagnostics.
+          </p>
+        </div>
+      </div>
+      <a
+        href="/upload"
+        class="shadow-3xl shadow-gray-200 cta h-14 w-max px-8 py-4 mt-20 flex flex-col justify-center content-center items-center bg-gradient-to-bl from-white to-white hover:bg-gradient-to-r rounded-full my-auto text-black"
+      >
+        Get Started
+      </a>
+    </section>
+    <section
+      class="h-[120vh] flex flex-col items-center w-full content-center pt-12 p-6 bg-gradient-to-bl from-white via-sky-200 to-pink-100 text-center"
+    >
+      <h1 class="text-5xl text-black/90 font-extrabold w-1/2">
+        Unmatched
+        <span
+          class="bg-gradient-to-tr from-sky-700 to-sky-800 text-transparent bg-clip-text"
+          >Precision</span
+        >
+      </h1>
+      <p class="text-black w-1/2 my-2 text-md text-center">
+        Our carefully crafted AI mechanisms ensure unparalleled accuracy in
+        detecting cancerous cells, providing you with reliable results every
+        time.
+      </p>
+
+      <img
+        src="../assets/img/mockup_scan.png"
+        alt=""
+        class="h-1/2 mt-10 relative transition-all transform scale-[1.01] inset-0 dance"
+      />
+
+      <a
+        href="/upload"
+        class="shadow-3xl shadow-gray-200 cta h-14 w-max px-8 py-4 mt-10 flex flex-col justify-center content-center items-center bg-gradient-to-bl from-sky-500 to-darkBlue hover:bg-gradient-to-r rounded-full my-auto text-white"
+      >
+        Get Started
+      </a>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById("late-stages-chart").getContext("2d");
+      const lateStagesChart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: ["Africa", "Asia", "Europe", "North America"],
+          datasets: [
+            {
+              label: "Prevalence of Late-Stage Presentation (%)",
+              data: [62.6, 69.3, 46.51, 50.16],
+              backgroundColor: [
+                "rgba(255, 99, 132)",
+                "rgba(54, 162, 235)",
+                "rgba(255, 206, 86)",
+                "rgba(75, 192, 192)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "right",
+              labels: {
+                usePointStyle: true,
+                pointStyle: "circle",
+                padding: 20,
+              },
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  let label = context.label || "";
+                  if (label) {
+                    label += ": ";
+                  }
+                  label += context.raw + "%";
+                  return label;
+                },
+              },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+
+{% endblock content %}
