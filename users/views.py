@@ -25,10 +25,6 @@ def home(request):
 def register_view(request):
     return render(request, 'register.html')
 
-def logout(request):
-    request.session.flush()
-    return redirect('home.html')
-    pass
 
 def register_user(request):
     if request.method == 'POST':
