@@ -16,7 +16,7 @@ from django.urls import reverse_lazy
 from .models import User, TenantProfile, ProviderProfile
 from .forms import (
     UserRegistrationForm, TenantProfileForm,
-    ProviderProfileForm, LoginForm
+    ProviderProfileForm, LoginForm, ElectricVehicleForm,
 )
 
 def home(request):
@@ -25,10 +25,6 @@ def home(request):
 def register_view(request):
     return render(request, 'register.html')
 
-def logout(request):
-    request.session.flush()
-    return redirect('home')
-    pass
 
 def register_user(request):
     if request.method == 'POST':
@@ -147,3 +143,21 @@ def admin_dashboard(request):
     }
 
     return render(request, 'admin_dashboard.html', context)
+
+@login_required
+def add_vehicle(request):
+    if request.user.role != User.PROVIDER:
+       return redirect('home')
+
+    if request.method == 'POST':
+       form = ElectricVehicleForm(request.POST)
+       if form.is_valid():
+        vehicle = form.save(commit=False)
+        vehicle.provider = request.user.provider_profile
+        vehicle.save()
+
+        return redirect('provider_dashboard')
+    else:
+       form = ElectricVehicleForm()
+
+    return render(request, 'vehicle_form.html', {'form': form})
