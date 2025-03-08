@@ -9,11 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
 import os
-import os
-from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
 
@@ -45,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    
 ]
 
 MIDDLEWARE = [
@@ -69,7 +65,7 @@ STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,11 +83,29 @@ WSGI_APPLICATION = 'api.wsgi.app'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-# Note: Django modules for using databases are not support in serverless
-# environments like Vercel. You can use a database over HTTP, hosted elsewhere.
+# For local development using SQLite
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
-DATABASES = {}
+# Uncomment this for production with a different database over HTTP
+# If using Vercel or another serverless environment
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django_postgres_engine',  # or other HTTP database adapter
+#         'NAME': os.getenv('DB_NAME', 'esafari'),
+#         'USER': os.getenv('DB_USER', ''),
+#         'PASSWORD': os.getenv('DB_PASSWORD', ''),
+#         'HOST': os.getenv('DB_HOST', ''),
+#         'PORT': os.getenv('DB_PORT', '5432'),
+#     }
+# }
 
+# Set the auth user model to your custom user model
+AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -128,8 +142,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
