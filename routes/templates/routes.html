@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+        font-family: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+    </style>
+    <title>Esafari</title>
+  </head>
+  <body class="antialiased scroll-smooth">
+    <div class="w-full h-48 m-0 bg-gray-50 bg-gradient-to-tr from-emerald-700 via-emerald-900 to-emerald-600 flex flex-col items-center content-center justify-center">
+      <h1 class="text-3xl text-white">Search For Destination</h1>
+      <form action="" class="w-full mx-auto flex flex-col items-center content-center justify-center" name="search">
+        <input type="text" name="" class="mx-auto mt-6 h-12 w-8/12 bg-white rounded-2xl p-3 focus:outline-0 focus-ring-0 focus-border-0 focus:shadow-none" placeholder="Type a location to search" onkeyup="search_location(this.value)" />
+      </form>
+    </div>
+
+    <div id="response" class="h-96 w-full"></div>
+
+    <div id="embed" class="h-96 w-full"></div>
+    <script>
+      let userPosition = null
+      window.addEventListener('DOMContentLoaded', () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          userPosition = position
+          console.log(position.coords.latitude, position.coords.longitude)
+        })
+      })
+      
+      function search_location(query) {
+        let xhr = new XMLHttpRequest()
+        let url = `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=99944ac169fa4ecfac3c584863458c09&pretty=1`
+        xhr.open('GET', url, true)
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              let response = JSON.parse(xhr.responseText)
+              let resultHTML = '<div class="p-4">'
+              if (response.results && response.results.length > 0) {
+                response.results.forEach((place) => {
+                  if (place.formatted.toLowerCase().includes('kenya')) {
+                    resultHTML += `
+                                      <div class="mb-4 p-6 h-34 max-h-max bg-white rounded shadow">
+                                          <h2 class="text-xl font-bold">${place.formatted}</h2>
+                                          <p class="my-6">Coordinates: ${place.geometry.lat}, ${place.geometry.lng}</p>
+                                          <a href="../directions/?latt=${place.geometry.lat}&long=${place.geometry.lng}" class="mt-16 mb-1 text-white rounded-lg bg-gradient-to-tl from-emerald-600 via-emerald-700 to-emerald-900 hover:bg-gradient-to-br px-6 py-2"> <i class="fas fa-map-marker-alt mr-1"></i>  Get directions </a>
+                                      </div>
+                                  `
+                  }
+                })
+              } else {
+                resultHTML += '<p>No results found</p>'
+              }
+              resultHTML += '</div>'
+              document.getElementById('response').innerHTML = resultHTML
+            } else {
+              console.error('Error fetching data')
+              document.getElementById('response').innerHTML = '<p class="p-4 text-red-500">Error fetching data</p>'
+            }
+          }
+        }
+        xhr.send()
+      }
+    </script>
+  </body>
+</html>
