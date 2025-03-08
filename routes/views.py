@@ -15,11 +15,11 @@ geocoder = OpenCageGeocode(settings.OPENCAGE_API_KEY)
 # Create your views here.
 
 def home(request): 
-    return render(request, "home.html")
+    return render(request, "routes.html")
 
 @csrf_exempt
 def streetmap_api(request):
-    if request.method == 'GET':                           
+    if request.method == 'GET':
         data = {
             'message': 'Hello, this is a GET request!',
             'status': 'success',
