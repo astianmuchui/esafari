@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}<title>e-Safari | Sustainable Mobility in Kenya</title>{% endblock title %}
+{% block content %}
+    <header>
+        <div class="w-full h-screen m-0 bg-green-20 bg-gradient-to-tr from-[#565a41] via [#c7ab91] to-[#c577d73]">
+            
+
+
+            <nav>
+                <a href="{% url 'loginpage'%}" class="logo">
+                    
+                 
+                </a>
+                <ul class="nav-links">
+                    <li class="text-white"><a href="{% url 'loginpage'%}">Why Choose Us</a></li>
+                    <li><a href="#" class="btn btn-light">Login</a></li>
+                    <li><a href="#" class="btn">Register</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+{% endblock%}
