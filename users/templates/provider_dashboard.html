@@ -22,7 +22,7 @@
     <div class="container mx-auto px-4 py-6">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800">Provider Dashboard</h1>
-            <a href="{% url 'add_vehicle' %}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition">
+            <a href="{% url 'logout' %}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition">
                 <i class="fas fa-plus mr-2"></i> Add New Vehicle
             </a>
         </div>
@@ -164,7 +164,7 @@
             {% else %}
             <div class="p-6 text-center">
                 <p class="text-gray-500">You haven't added any vehicles yet.</p>
-                <a href="{% url 'add_vehicle' %}" class="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition">
+                <a href="{% url 'logout' %}" class="mt-4 inline-block bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md transition">
                     <i class="fas fa-plus mr-2"></i> Add Your First Vehicle
                 </a>
             </div>
@@ -176,7 +176,7 @@
             <div class="p-4 bg-gray-50 border-b">
                 <h2 class="text-xl font-semibold text-gray-700">Recent Reservations</h2>
             </div>
-            
+
             {% if recent_reservations %}
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
